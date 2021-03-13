@@ -1,0 +1,11 @@
+*
+!*/
+!*.md
+!.gitignore
+!LICENSE
+
+!*.c
+!*.cpp
+!*.h
+!*.hpp
+!*.sh
