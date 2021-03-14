@@ -15,30 +15,29 @@ typedef Elemtype *Triplet;
 
 //--------Function List--------
 
-    //构造三元组T，元素e1,e2,e3分别赋值为v1,v2,v3
+    //initialize triplet with 3 elements
 Status InitTriplet(Triplet * T, Elemtype v1, Elemtype v2, Elemtype v3);
-    //销毁三元组T
+    //destroy triplet
 Status DestroyTriplet(Triplet * T);
-    //用e返回T的第i元
+    //return the ith element with e
 Status Get(Triplet T, int i, Elemtype * e);
-    //改变T的第i元为e
+    //set the ith element with e
 Status Put(Triplet * T, int i, Elemtype e);
-    //判断T的三个元素是否按升序排列
+    //judge whether elems are getting larger
 Status IsAscending(Triplet T);
-    //判断T的三个元素是否按降序排列
+    //judge whether elems are getting smaller
 Status IsDescending(Triplet T);
-    //用e返回T的三个元素中最大值
+    //return the max element
 Status Max(Triplet T, Elemtype * e);
-    //用e返回T的三个元素中最小值
+    //return the min element
 Status Min(Triplet T, Elemtype * e);
 
 //----------Function-----------
 
 Status InitTriplet(Triplet * T, Elemtype v1, Elemtype v2, Elemtype v3){
-    *T = (Elemtype *)malloc(3 * sizeof(Elemtype));//分配内存空间
-    if(*T == NULL)//分配空间失败
+    *T = (Elemtype *)malloc(3 * sizeof(Elemtype));
+    if(*T == NULL)
         exit(OVERFLOW);
-    //元素赋值
     (*T)[0] = v1;
     (*T)[1] = v2;
     (*T)[2] = v3;
@@ -52,14 +51,14 @@ Status DestroyTriplet(Triplet * T){
 }
 
 Status Get(Triplet T, int i, Elemtype * e){
-    if(i < 1 || i > 3)//i不合法
+    if(i < 1 || i > 3)
         return ERROR;
     *e = T[i-1];
     return OK;
 }
 
 Status Put(Triplet * T, int i, Elemtype e){
-    if(i < 1 || i > 3)//i不合法
+    if(i < 1 || i > 3)
         return ERROR;
     (*T)[i-1] = e;
     return OK;

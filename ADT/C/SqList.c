@@ -22,29 +22,29 @@ typedef struct{
 
 //--------Function List--------
 
-    //构造一个空的顺序表L
+    //initialize sequent list
 Status InitList_Sq(SqList * L);
-    //销毁顺序表L
+    //destroy list
 Status DestroyList_Sq(SqList * L);
-    //将L重置为空表
+    //set the list empty
 void ClearList_Sq(SqList * L);
-    //判断L是否为空表
+    //judge whether the list is empty
 Status ListEmpty_Sq(SqList * L);
-    //返回L中数据元素的数目
+    //return the length of the list
 int ListLength_Sq(SqList * L);
-    //用e返回L中第i个元素的值
+    //use e to return the ith element of list
 Status GetElem_Sq(SqList * L, int i, Elemtype * e);
-    //在顺序表L中找到第一个值与e满足cmp()的元素的位序
+    //return the order of the first element meet cmp()
 int LocateElem_Sq(SqList * L, Elemtype e, int (*cmp)(Elemtype data, Elemtype e));
-    //返回cur_e的前驱结点prior
+    //use prior to return the former element of cur
 Status PriorElem_Sq(SqList * L, Elemtype cur, Elemtype * prior);
-    //返回cur_e的后继结点next
+    //use next to return the latter element of cur
 Status NextElem_Sq(SqList * L, Elemtype cur, Elemtype * next);
-    //在顺序表L中的i个位置前插入新元素e
+    //insert e before the ith element
 Status ListIns_Sq(SqList * L, int i, Elemtype e);
-    //删除顺序表L中第i个元素，用e返回其值
+    //delete the ith element and return it with e
 Status ListDel_Sq(SqList * L, int i, Elemtype * e);
-    //归并值非递减排列的两个顺序表La,Lb得到新的顺序表Lc，其也按值非递减排列
+    //merge two descending SqList to a new descending SqList
 void MergeList_Sq(SqList La, SqList Lb, SqList * Lc);
 
 //----------Function-----------

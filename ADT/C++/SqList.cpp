@@ -113,6 +113,7 @@ struct SqList{
     }
 };
 
+//merge two descending SqList to a new descending SqList
 template <typename T>
 void MergeList_Sq(SqList<T> La, SqList<T> Lb, SqList<T> & Lc){
     Lc.size = Lc.len = La.len + Lb.len;
