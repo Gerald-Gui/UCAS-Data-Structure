@@ -1,5 +1,7 @@
 #include <cstdlib>
 
+const int overflow = 1;
+
 template <typename T>
 struct Triplet{
     T * arr;
@@ -8,6 +10,8 @@ struct Triplet{
     }
     Triplet(T v1, T v2, T v3){
         arr = (T *)malloc(sizeof(T));
+        if(arr == nullptr)
+            exit(overflow);
         arr[0] = v1;    arr[1] = v2;    arr[2] = v3;
     }
     void Destroy(){
