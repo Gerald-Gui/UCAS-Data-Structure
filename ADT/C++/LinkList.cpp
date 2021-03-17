@@ -61,14 +61,12 @@ struct LinkList{
     }
 
     //insert node s to the front of node p and point p to s
-    bool InsBefore(ListNode<T> * & p, ListNode<T> * s){
-        ListNode<T> * q = head;
-        while(q->nxt != p && q != nullptr)
-            q = q->nxt;
+    bool InsBefore(ListNode<T> ** p, ListNode<T> * s){
+        ListNode<T> * q = PriorPos(*p);
         if(q == nullptr)
             return false;
         HeadIns(q, s);
-        p = s;
+        *p = s;
         return true;
     }
 
@@ -124,26 +122,6 @@ struct LinkList{
         while(p->nxt->nxt != nullptr)
             p = p->nxt;
         HeadDel(q);
-        return true;
-    }
-
-    //return a pointer to the prior node of p
-    ListNode<T> * PriorPos(ListNode<T> * p){
-        ListNode<T> * q = head;
-        while(q->nxt != p && q->nxt != nullptr)
-            q = q->nxt;
-        if(q->nxt != p)
-            return nullptr;
-        return q;
-    }
-
-    //insert node s to the front of node p and point p to s
-    bool InsBefore(ListNode<T> * & p, ListNode<T> * s){
-        ListNode<T> * q = head;
-        if((q = PriorPos(p)) == nullptr)
-            return false;
-        HeadIns(q, s);
-        p = s;
         return true;
     }
 

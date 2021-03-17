@@ -127,28 +127,6 @@ struct CircularLinkList{
         return true;
     }
 
-    //return a pointer to the prior node of p
-    ListNode<T> * PriorPos(ListNode<T> * p){
-        ListNode<T> * q = head;
-        while(q->nxt != p && q->nxt != head)
-            q = q->nxt;
-        if(p == head)
-            return q;
-        if(q->nxt != p)
-            return nullptr;
-        return q;
-    }
-
-    //insert node s to the front of node p and point p to s
-    bool InsBefore(ListNode<T> * & p, ListNode<T> * s){
-        ListNode<T> * q = head;
-        if((q = PriorPos(p)) != nullptr)
-            return false;
-        HeadIns(q, s);
-        p = s;
-        return true;
-    }
-
     //return the ith elem with node p
     bool LocatePos(int i, ListNode<T> ** p){
         if(i < 1 || i > len)
