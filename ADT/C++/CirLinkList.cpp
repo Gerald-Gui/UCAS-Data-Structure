@@ -121,9 +121,11 @@ struct CircularLinkList{
         if(len == 0)
             return false;
         ListNode<T> * p = head;
-        while(p->nxt->nxt != nullptr)
+        while(p->nxt->nxt != head)
             p = p->nxt;
-        HeadDel(q);
+        q = p->nxt;
+        p->nxt = head;
+        len--;
         return true;
     }
 

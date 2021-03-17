@@ -121,7 +121,9 @@ struct LinkList{
         ListNode<T> * p = head;
         while(p->nxt->nxt != nullptr)
             p = p->nxt;
-        HeadDel(q);
+        q = p->nxt;
+        p->nxt = nullptr;
+        len--;
         return true;
     }
 
