@@ -29,6 +29,7 @@ struct LinkList{
     void HeadIns(ListNode<T> * head, ListNode<T> * s){
         s->nxt = head->nxt;
         head->nxt = s;
+        len++;
     }
     
     //delete the first elem in link list
@@ -37,6 +38,7 @@ struct LinkList{
             return false;
         q = head->nxt;
         head->nxt = head->nxt->nxt;
+        len--;
         return true;
     }
 
@@ -77,7 +79,6 @@ struct LinkList{
             p = new ListNode<T>;
             cin >> p->val;
             HeadIns(head, p);
-            len++;
         }
         ////if build list in input order
         //p = head;
@@ -92,11 +93,10 @@ struct LinkList{
     //set the link list empty
     void ClearList(){
         ListNode<T> * p = nullptr;
-        while(HeadDel(L, p)){
+        while(HeadDel(p)){
             delete p;
             p = nullptr;
         }
-        len = 0;
     }
 
     //destroy link list and free memory
@@ -110,6 +110,10 @@ struct LinkList{
     void Append(ListNode<T> * s){
         ListNode<T> * p = GetLast();
         p->nxt = s;
+        while(p->nxt != nullptr){
+            p = p->nxt;
+            len++;
+        }
     }
 
     //remove the tail node and return it with q
@@ -120,7 +124,6 @@ struct LinkList{
         while(p->nxt->nxt != nullptr)
             p = p->nxt;
         HeadDel(q);
-        len--;
         return true;
     }
 
@@ -148,6 +151,8 @@ struct LinkList{
     bool LocatePos(int i, ListNode<T> ** p){
         int cnt = 0;
         ListNode<T> * q = head;
+        if(i < 1 || i > len)
+            return false;
         while(q != nullptr && cnt < i){
             q = q->nxt;
             cnt++;
