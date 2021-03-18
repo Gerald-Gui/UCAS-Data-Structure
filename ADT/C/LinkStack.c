@@ -17,18 +17,18 @@ typedef struct{
 } LinkStack;
 
 //initialize an empty stack
-Status InitStack(LinkStack * S){
+Status InitStack_L(LinkStack * S){
     S->top = NULL;
     S->len = 0;
 }
 
 //judge whether stack S is empty
-inline Status IsStackEmpty(LinkStack S){
+inline Status IsStackEmpty_L(LinkStack S){
     return S.top == NULL;
 }
 
 //push elem into stack
-Status Push(LinkStack * S, ElemType e){
+Status Push_L(LinkStack * S, ElemType e){
     ListNode * p = malloc(sizeof(ListNode));
     if(p == NULL)
         exit(OVERFLOW);
@@ -40,7 +40,7 @@ Status Push(LinkStack * S, ElemType e){
 }
 
 //delete the top elem and return it with e if stack is not empty
-Status Pop(LinkStack * S, ElemType * e){
+Status Pop_L(LinkStack * S, ElemType * e){
     ListNode * p = S->top;
     if(IsStackEmpty(*S))
         return ERROR;
@@ -53,19 +53,19 @@ Status Pop(LinkStack * S, ElemType * e){
 }
 
 //set stack S empty
-void ClearStack(LinkStack * S){
+void ClearStack_L(LinkStack * S){
     ElemType e;
     while(Pop(S, &e))
         ;
 }
 
 //destroy stack S
-Status DestroyStack(LinkStack * S){
+Status DestroyStack_L(LinkStack * S){
     ClearStack(S);
 }
 
 //return the head elem with e if stack is not empty
-Status GetTop(LinkStack S, ElemType * e){
+Status GetTop_L(LinkStack S, ElemType * e){
     if(IsStackEmpty(S))
         return ERROR;
     *e = S.top->val;
@@ -73,7 +73,7 @@ Status GetTop(LinkStack S, ElemType * e){
 }
 
 //call func visit() from botton to top
-Status StackTraverse(LinkStack S, Status (*visit)(ElemType e)){
+Status StackTraverse_L(LinkStack S, Status (*visit)(ElemType e)){
     if(IsStackEmpty(S))
         return OK;
     LinkStack nxtS;

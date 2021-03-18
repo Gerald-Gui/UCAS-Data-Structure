@@ -16,7 +16,7 @@ typedef struct{
 } SqStack;
 
 //initialize an empty stack
-Status InitStack(SqStack * S){
+Status InitStack_Sq(SqStack * S){
     S->data = malloc(STACK_INIT_SIZE * sizeof(ElemType));
     if(S->data == NULL)
         exit(OVERFLOW);
@@ -26,7 +26,7 @@ Status InitStack(SqStack * S){
 }
 
 //destroy stack S
-Status DestroyStack(SqStack * S){
+Status DestroyStack_Sq(SqStack * S){
     free(S->data);
     S->data = NULL;
     S->top = S->size = 0;
@@ -34,17 +34,17 @@ Status DestroyStack(SqStack * S){
 }
 
 //set stack S empty
-void ClearStack(SqStack * S){
+void ClearStack_Sq(SqStack * S){
     S->top = 0;
 }
 
 //judge whether stack S is empty
-inline Status IsStackEmpty(SqStack S){
+inline Status IsStackEmpty_Sq(SqStack S){
     return S.top == 0;
 }
 
 //return the head elem with e if stack isn't empty
-Status GetTop(SqStack S, ElemType * e){
+Status GetTop_Sq(SqStack S, ElemType * e){
     if(IsStackEmpty(S))
         return ERROR;
     *e = S.data[S.top - 1];
@@ -52,7 +52,7 @@ Status GetTop(SqStack S, ElemType * e){
 }
 
 //push elem into stack
-Status Push(SqStack * S, ElemType e){
+Status Push_Sq(SqStack * S, ElemType e){
     if(S->top >= S->size){
         S->data = realloc(S->data, (S->size + STACKINCREMENT) * sizeof(ElemType));
         if(S->data == NULL)
@@ -65,7 +65,7 @@ Status Push(SqStack * S, ElemType e){
 }
 
 //delete the top elem and return it with e if stack is not empty
-Status Pop(SqStack * S, ElemType * e){
+Status Pop_Sq(SqStack * S, ElemType * e){
     if(IsStackEmpty(*S))
         return ERROR;
     *e = S->data[--S->top];
@@ -73,7 +73,7 @@ Status Pop(SqStack * S, ElemType * e){
 }
 
 //call func visit() from bottom to top
-Status StackTraverse(SqStack S, Status (*visit)(ElemType e)){
+Status StackTraverse_Sq(SqStack S, Status (*visit)(ElemType e)){
     for(int i = 0; i < S.top; i++)
         if(!(*visit)(S.data[i]))
             return ERROR;
