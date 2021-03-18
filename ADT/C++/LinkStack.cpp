@@ -1,7 +1,7 @@
 template <typename T>
 struct ListNode{
     T val;
-    ListNode * nxt;
+    ListNode<T> * nxt;
     ListNode(){
         val = 0;
         nxt = nullptr;
@@ -65,7 +65,7 @@ struct LinkStack{
 
     //call func visit() from bottom to top
     bool Traverse(bool (*visit)(T e)){
-        LinkStack * S = new LinkStack;
+        LinkStack<T> * S = new LinkStack<T>;
         S->top = top->nxt;
         S->len = len - 1;
         if(S->IsEmpty())
