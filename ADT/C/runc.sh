@@ -1,4 +1,4 @@
-if test -e ./$1.cpp
+if test -e ./$1.c
 then
     echo Compiling source code
     gcc -g $1.c -o $1
