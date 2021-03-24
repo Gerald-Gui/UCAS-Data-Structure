@@ -35,7 +35,7 @@ Status StrDelete_H(HString * S, int pos, int len);
 //use V to replace all substrings equals to T in string S
 Status Replace_H(HString * S, HString T, HString V);
 //destroy string S
-Status DestroyString(HString * S);
+Status DestroyString_H(HString * S);
 
 void StrInit_H(HString * T){
     T->ch = NULL;
@@ -180,7 +180,7 @@ Status Replace_H(HString * S, HString T, HString V){
     return OK;
 }
 
-Status DestroyString(HString * S){
+Status DestroyString_H(HString * S){
     S->len = 0;
     if(S->ch != NULL)
         free(S->ch);
