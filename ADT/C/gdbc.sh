@@ -8,5 +8,5 @@ then
     rm -f $1
 else
     echo Error: illegal source file name
-    echo Usage: ./gdbc.sh <file_name_without_.c>
+    echo Usage: ./gdbc.sh file_name_without_.c
 fi

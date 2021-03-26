@@ -8,5 +8,5 @@ then
 	rm $1
 else
 	echo Error: illegal source file name.
-	echo Usage: ./gdbcpp.sh <file_name_without_.cpp>
+	echo Usage: ./gdbcpp.sh file_name_without_.cpp
 fi
