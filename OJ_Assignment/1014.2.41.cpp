@@ -100,7 +100,7 @@ LinkedPoly BuildPoly(){
 }
 
 void DifPoly(LinkedPoly L){
-    PolyNode * p = L->nxt, * prev = L, * pnxt = L->nxt->nxt;
+    PolyNode * p = L->nxt, * prev = L;
     while(p != L){
         p->coe *= p->exp;
         p->exp--;
