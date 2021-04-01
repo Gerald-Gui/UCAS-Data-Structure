@@ -27,7 +27,6 @@ ADT的编写主要参考课程所用教材^[严蔚敏，吴伟民：数据结构
 
 1. C++的面向对象部分一般只应用`struct`，通常不会进行`class`的编写
 2. 模板的编写一般仅用于ADT内，不在OJ Assignments中应用。
-3. 关于抛出异常，笔者尚缺少此部分知识。在本repo中编写ADT时出于安全考虑将使用C风格的动态内存分配与异常处理（`malloc`,`free`,`realloc`等函数），编写OJ Assignments将默认认为内存充足直接使用`new`,`delete`。
 
 ##### Modern C++
 
