@@ -1,4 +1,5 @@
 #include <iostream>
+#include <new>
 using namespace std;
 
 template <typename T>
@@ -53,6 +54,7 @@ struct LinkList{
 
 template <typename T>
 LinkList<T>::LinkList(){
+    set_new_handler(exit(1));
     head = new ListNode<T>;
     len = 0;
 }
@@ -65,6 +67,7 @@ LinkList<T>::~LinkList(){
 
 template <typename T>
 void LinkList<T>::CreateList(int n){
+    set_new_handler(exit(1));
     ListNode<T> * p = nullptr;
     while(n--){
         p = new ListNode<T>;
