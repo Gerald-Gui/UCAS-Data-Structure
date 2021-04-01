@@ -6,6 +6,8 @@
 
 对于需要动态重新分配空间大小的情况，C++ 通常用`vector`处理，但这毕竟还是个数据结构课程，故而在顺序表、顺序栈等数据结构的 C++ 实现中通常使用 C 语言式的内存分配方式。
 
+对于 C++ 中使用`new`抛出的`bad_alloc`异常，在`Triplet.cpp`中演示了使用`try-catch`的处理方式，在`LinkList.cpp`中演示了使用函数`set_new_handler`的处理方式，在其他 ADT 中不处理该异常，默认 ADT 使用者在编写的程序`main`函数中使用函数`set_new_handler`处理该异常。
+
 代码编写思路除来自教材、个人思考外，也有部分来自 Robert Sedgewick 撰写的 *Algorithms in C*（《算法：C语言实现》）。
 
 ### ADT 编写情况
