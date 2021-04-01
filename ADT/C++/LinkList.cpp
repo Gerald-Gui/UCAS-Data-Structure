@@ -54,25 +54,25 @@ struct LinkList{
 
 template <typename T>
 LinkList<T>::LinkList(){
-    set_new_handler(exit(1));
-    head = new ListNode<T>;
-    len = 0;
+    set_new_handler(abort);
+    this->head = new ListNode<T>;
+    this->len = 0;
 }
 
 template <typename T>
 LinkList<T>::~LinkList(){
-    LinkList<T>::ClearList();
+    this->ClearList();
     DeletePtr(head);
 }
 
 template <typename T>
 void LinkList<T>::CreateList(int n){
-    set_new_handler(exit(1));
+    set_new_handler(abort);
     ListNode<T> * p = nullptr;
     while(n--){
         p = new ListNode<T>;
         cin >> p->val;
-        LinkList<T>::HeadIns(head, p);
+        this->HeadIns(this->head, p);
     }
     ////if build list in input order
     //p = head;
@@ -87,7 +87,7 @@ void LinkList<T>::CreateList(int n){
 template <typename T>
 void LinkList<T>::ClearList(){
     ListNode<T> * p = nullptr;
-    while(LinkList<T>::HeadDel(head, p))
+    while(this->HeadDel(this->head, p))
         DeletePtr(p);
 }
 
@@ -95,30 +95,30 @@ template <typename T>
 void LinkList<T>::HeadIns(ListNode<T> * h, ListNode<T> * s){
     s->nxt = h->nxt;
     h->nxt = s;
-    len++;
+    this->len++;
 }
 
 template <typename T>
 bool LinkList<T>::HeadDel(ListNode<T> * h, ListNode<T> * & q){
-    if(len == 0)
+    if(this->len == 0)
         return false;
     q = h->nxt;
     h->nxt = h->nxt->nxt;
-    len--;
+    this->len--;
     return true;
 }
 
 template <typename T>
 ListNode<T> * LinkList<T>::GetLast(){
-    ListNode<T> * p = head;
+    ListNode<T> * p = this->head;
     while(p->nxt != nullptr)
         p = p->nxt;
     return p;
 }
 
 template <typename T>
-ListNode<T> * PriorPos(ListNode<T> * p){
-    ListNode<T> * q = head;
+ListNode<T> * LinkList<T>::PriorPos(ListNode<T> * p){
+    ListNode<T> * q = this->head;
     while(q->nxt != p && q->nxt != nullptr)
         q = q->nxt;
     return q->nxt != p ? nullptr : q;
@@ -126,32 +126,32 @@ ListNode<T> * PriorPos(ListNode<T> * p){
 
 template <typename T>
 bool LinkList<T>::InsBefore(ListNode<T> * & p, ListNode<T> * s){
-    ListNode<T> * q = LinkList<T>::PriorPos(p);
+    ListNode<T> * q = this->PriorPos(p);
     if(q == nullptr)
         return false;
-    LinkList<T>::HeadIns(q, s);
+    this->HeadIns(q, s);
     p = s;
     return true;
 }
 
 template <typename T>
 void LinkList<T>::Append(ListNode<T> * s){
-    ListNode<T> * p = LinkList<T>::GetLast();
+    ListNode<T> * p = this->GetLast();
     p->nxt = s;
     while(p->nxt != nullptr){
         p = p->nxt;
-        len++;
+        this->len++;
     }
 }
 
 template <typename T>
 bool LinkList<T>::RemoveTail(ListNode<T> * & q){
-    if(len == 0)
+    if(this->len == 0)
         return false;
-    q = LinkList<T>::GetLast();
-    ListNode<T> * p = LinkList<T>::PriorPos(q);
+    q = this->GetLast();
+    ListNode<T> * p = this->PriorPos(q);
     p->nxt = nullptr;
-    len--;
+    this->len--;
     return true;
 }
 
@@ -159,7 +159,7 @@ template <typename T>
 bool LinkList<T>::LocatePos(int i, ListNode<T> * & p){
     int cnt = 0;
     ListNode<T> * q = head;
-    if(i < 1 || i > len)
+    if(i < 1 || i > this->len)
         return false;
     while(q != nullptr && cnt < i){
         q = q->nxt;
