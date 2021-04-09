@@ -11,7 +11,7 @@ inline void DeletePtr(T * & ptr){
 template <typename T>
 struct ListNode{
     T val;
-    ListNode * nxt;
+    ListNode<T> * nxt;
     ListNode(){
         val = 0;
         nxt = nullptr;
@@ -19,7 +19,7 @@ struct ListNode{
     ListNode(T v): val(v) {
         nxt = nullptr;
     }
-    ListNode(T v, ListNode * p): val(v), nxt(p) {}
+    ListNode(T v, ListNode<T> * p): val(v), nxt(p) {}
 };
 
 template <typename T>
