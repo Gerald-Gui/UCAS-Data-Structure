@@ -1,22 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "LinkList.h"
 
-#define OK      1
-#define ERROR   0
-#define OVERFLOW    -2
-
-typedef int ElemType;
-typedef int Status;
-typedef struct LinkNode{
-    ElemType val;
-    struct LinkNode * nxt;
-} LinkNode;
-typedef struct LinkList{
-    LinkNode * head;
-    int len;
-} LinkList;
-
-    //alloc memory for a node
 LinkNode * MakeNode(ElemType e){
     LinkNode * p = malloc(sizeof(LinkNode));
     if(p == NULL)
@@ -26,13 +11,11 @@ LinkNode * MakeNode(ElemType e){
     return p;
 }
 
-    //free the memory of node pointed by p
 void FreeNode(LinkNode ** p){
     free(*p);
     *p = NULL;
 }
 
-    //initialize an empty linked list
 Status InitList_L(LinkList * L){
     L->head = malloc(sizeof(LinkNode));
     if(L->head == NULL)
@@ -42,13 +25,11 @@ Status InitList_L(LinkList * L){
     return OK;
 }
 
-    //insert a new node right after the head node
 void HeadIns_L(LinkNode * head, LinkNode * s){
     s->nxt = head->nxt;
     head->nxt = s;
 }
 
-    //build a linked list with n elems reversely inputed
 Status CreateList_L(LinkList * L, int n){
     int i;
     LinkNode * p = NULL;
@@ -75,7 +56,6 @@ Status CreateList_L(LinkList * L, int n){
     return OK;
 }
 
-    //delete the first elem in link list
 Status HeadDel_L(LinkNode * head, LinkNode ** q){
     if(head->nxt == NULL)
         return ERROR;
@@ -84,7 +64,6 @@ Status HeadDel_L(LinkNode * head, LinkNode ** q){
     return OK;
 }
 
-    //set the link list empty
 Status ClearList_L(LinkList * L){
     LinkNode * p = NULL;
     while(HeadDel_L(L, &p))
@@ -93,7 +72,6 @@ Status ClearList_L(LinkList * L){
     return OK;
 }
 
-    //destroy link list and free memory
 Status DestroyList_L(LinkList * L){
     ClearList_L(L);
     FreeNode(&(L->head));
@@ -102,7 +80,6 @@ Status DestroyList_L(LinkList * L){
     return OK;
 }
 
-    //link s to the tail of L
 Status Append_L(LinkList L, LinkNode * s){
     LinkNode * p = L.head;
     while(p->nxt != NULL)
@@ -111,7 +88,6 @@ Status Append_L(LinkList L, LinkNode * s){
     return OK;
 }
 
-    //remove the tail node and return it with q
 Status RemoveTail_L(LinkList * L, LinkNode ** q){
     if(L->len == 0)
         return ERROR;
@@ -123,7 +99,6 @@ Status RemoveTail_L(LinkList * L, LinkNode ** q){
     return OK;
 }
 
-    //insert node s to the front of node p and point p to s
 Status InsBefore_L(LinkList * L, LinkNode ** p, LinkNode * s){
     LinkNode * q = L->head;
     while(q->nxt != *p && q != NULL)
@@ -135,14 +110,12 @@ Status InsBefore_L(LinkList * L, LinkNode ** p, LinkNode * s){
     return OK;
 }
 
-    //return a pointer to the tail node
 LinkNode * GetLast_L(LinkList L){
     while(L.head->nxt != NULL)
         L.head = L.head->nxt;
     return L.head;
 }
 
-    //return a pointer to the prior node of p
 LinkNode * PriorPos_L(LinkList L, LinkNode * p){
     while(L.head->nxt != p && L.head->nxt != NULL)
         L.head = L.head->nxt;
@@ -151,7 +124,6 @@ LinkNode * PriorPos_L(LinkList L, LinkNode * p){
     return L.head;
 }
 
-    //return the ith elem with p
 Status LocatePos_L(LinkList L, int i, LinkNode ** p){
     int cnt = 0;
     while(L.head != NULL && cnt < i){
@@ -164,7 +136,6 @@ Status LocatePos_L(LinkList L, int i, LinkNode ** p){
     return OK;
 }
 
-    //return a pointer to the first elem meet cmp()
 LinkNode * LocateElem_L(LinkList L, ElemType e, Status (*cmp)(ElemType data, ElemType e)){
     if(L.len == 0)
         return NULL;
@@ -173,7 +144,6 @@ LinkNode * LocateElem_L(LinkList L, ElemType e, Status (*cmp)(ElemType data, Ele
     return L.head;
 }
 
-    //traverse link list in natural order
 Status ListTraverse_L(LinkList L, Status (*visit)(ElemType data)){
     L.head = L.head->nxt;
     while(L.head != NULL){
@@ -184,7 +154,6 @@ Status ListTraverse_L(LinkList L, Status (*visit)(ElemType data)){
     return OK;
 }
 
-    //traverse link list in reverse order
 Status ReTraverse_L(LinkNode * head, Status (*visit)(ElemType data)){
     if(head == NULL)
         return ERROR;
