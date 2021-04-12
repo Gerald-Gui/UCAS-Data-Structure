@@ -11,7 +11,7 @@ struct BinaryTNode{
 template <typename T>
 bool InitBinaryTree(BinaryTNode<T> * root, T e){
     if(root != nullptr){
-        delete root;
+        DestroyBinaryTree(root);
         root = nullptr;
     }
     root = new BinaryTNode<T>;
@@ -67,4 +67,14 @@ bool PostOrderTraverse(BinaryTNode<T> * root, bool (*visit)(T e)){
         return false;
     if(!(*visit)(root->val))
         return false;
+}
+
+template <typename T>
+void DestroyBinaryTree(BinaryTNode<T> * root){
+    if(root == nullptr)
+        return;
+    DestroyBinaryTree(root->left);
+    DestroyBinaryTree(root->right);
+    delete root;
+    root = nullptr;
 }
