@@ -3,6 +3,7 @@
 !*.md
 !.gitignore
 !LICENSE
+!.gitattributes
 
 !*.c
 !*.cpp
