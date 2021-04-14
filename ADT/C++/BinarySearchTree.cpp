@@ -18,6 +18,10 @@ struct BSTNode{
     BSTNode<T> * Search(T tar);
     //insert a new node into BST
     bool Insert(T elem);
+    //delete this node from BST
+    bool Delete();
+    //delete a node from BST according to tar
+    bool Delete(T tar);
     //destroy the BST
     void Destroy();
 };
@@ -66,4 +70,56 @@ BSTNode<T> * BSTNode<T>::Search(T tar){
         else
             p = p->right;
     return p;
+}
+
+template <typename T>
+bool BSTNode<T>::Delete(){
+    BSTNode<T> * q = nullptr, * s = nullptr;
+    if(this == nullptr)
+        return false;
+    if(this->right == nullptr){
+        q = this;
+        this = this->left;
+        delete q;
+        q = nullptr;
+    }else if(this->left == nullptr){
+        q = this;
+        this = this->right;
+        delete q;
+        q = nullptr;
+    }else{
+        q = this;
+        s = this->left;
+        while(s->right != nullptr){
+            q = s;
+            s = s->right;
+        }
+        this->val = s->val;
+        if(q != this)
+            q->right = s->left;
+        else
+            q->left = s->left;
+        delete s;
+        s = nullptr;
+    }
+    return true;
+}
+
+template <typename T>
+bool BSTNode<T>::Delete(T tar){
+    if(this == nullptr)
+        return false;
+    else
+        if(tar == this->val)
+            return this->Delete();
+        else if(tar < this->val)
+            return this->left->Delete(tar);
+        else
+            return this->right->Delete(tar);    
+}
+
+template <typename T>
+void BSTNode<T>::Destroy(){
+    while(this->Delete())
+        ;
 }
