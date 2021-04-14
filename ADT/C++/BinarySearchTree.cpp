@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -24,6 +25,8 @@ struct BSTNode{
     bool Delete(T tar);
     //destroy the BST
     void Destroy();
+    //display the BST (traverse output nodes in In Order)
+    void Display();
 };
 
 template <typename T>
@@ -122,4 +125,13 @@ template <typename T>
 void BSTNode<T>::Destroy(){
     while(this->Delete())
         ;
+}
+
+template <typename T>
+void BSTNode<T>::Display(){
+    if(this == nullptr)
+        return;
+    this->left->Display();
+    cout << this->val << ' ';
+    this->right->Display();
 }
