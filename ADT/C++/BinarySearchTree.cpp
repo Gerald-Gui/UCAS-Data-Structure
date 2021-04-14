@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 using namespace std;
 
 template <typename T>
@@ -27,6 +28,8 @@ struct BSTNode{
     void Destroy();
     //display the BST (traverse output nodes in In Order)
     void Display();
+    //display the BST (using recursive way)
+    void rDisplay();
 };
 
 template <typename T>
@@ -129,6 +132,23 @@ void BSTNode<T>::Destroy(){
 
 template <typename T>
 void BSTNode<T>::Display(){
+    stack<BSTNode<T> *> S;
+    BSTNode<T> * p = this;
+    while(p != nullptr || !S.empty())
+        if(p != nullptr){
+            S.push(p);
+            p = p->left;
+        }else{
+            p = S.top();
+            S.pop();
+            cout << p->val << ' ';
+            p = p->right;
+        }
+    cout << endl;
+}
+
+template <typename T>
+void BSTNode<T>::rDisplay(){
     if(this == nullptr)
         return;
     this->left->Display();
