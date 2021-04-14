@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stack>
+#include <queue>
 using namespace std;
 
 template <typename T>
@@ -35,38 +37,93 @@ void CreateBinaryTree(BinaryTNode<char> ** root){
 
 template <typename T>
 bool PreOrderTraverse(BinaryTNode<T> * root, bool (*visit)(T e)){
-    if(root == nullptr)
-        return true;
-    if(!(*visit)(root->val))
-        return false;    
-    if(!PreOrderTraverse(root->left, visit))
-        return false;
-    if(!PreOrderTraverse(root->right, visit))
-        return false;
+/* recursive way
+ *  if(root == nullptr)
+ *      return true;
+ *  if(!(*visit)(root->val))
+ *      return false;    
+ *  if(!PreOrderTraverse(root->left, visit))
+ *      return false;
+ *  if(!PreOrderTraverse(root->right, visit))
+ *      return false;
+ */
+    stack<BinaryTNode<T> *> S;
+    BinaryTNode<T> * p = root;
+    while(p != nullptr || !S.empty())
+        if(p != nullptr){
+            if(!(*visit)(p->val))
+                return false;
+            S.push(p);
+            p = p->left;
+        }else{
+            p = S.top();
+            S.pop();
+            p = p->right;
+        }
+    return true;
 }
 
 template <typename T>
 bool InOrderTraverse(BinaryTNode<T> * root, bool (*visit)(T e)){
-    if(root == nullptr)
-        return true;
-    if(!InOrderTraverse(root->left, visit))
-        return false;
-    if(!(*visit)(root->val))
-        return false;
-    if(!InOrderTraverse(root->left, visit))
-        return false;
+/*
+ *  if(root == nullptr)
+ *      return true;
+ *  if(!InOrderTraverse(root->left, visit))
+ *      return false;
+ *  if(!(*visit)(root->val))
+ *      return false;
+ *  if(!InOrderTraverse(root->left, visit))
+ *      return false;
+ */
+    stack<BinaryTNode<T> *> S;
+    BinaryTNode<T> * p = root;
+    while(p != nullptr || !S.empty())
+        if(p != nullptr){
+            S.push(p);
+            p = p->left;
+        }else{
+            p = S.top();
+            S.pop();
+            if(!(*visit)(p->val))
+                return false;
+            p = p->right;
+        }
+    return true;
 }
 
 template <typename T>
 bool PostOrderTraverse(BinaryTNode<T> * root, bool (*visit)(T e)){
-    if(root == nullptr)
-        return true;
-    if(!PostOrderTraverse(root->left, visit))
-        return false;
-    if(!PostOrderTraverse(root->right, visit))
-        return false;
-    if(!(*visit)(root->val))
-        return false;
+/* recursive way
+ *  if(root == nullptr)
+ *      return true;
+ *  if(!PostOrderTraverse(root->left, visit))
+ *      return false;
+ *  if(!PostOrderTraverse(root->right, visit))
+ *      return false;
+ *  if(!(*visit)(root->val))
+ *      return false;
+ */
+    stack<BinaryTNode<T> *> S;
+    BinaryTNode<T> * p = root, * r = nullptr;
+    while(p != nullptr || !S.empty())
+        if(p != nullptr){
+            S.push(p);
+            p = p->left;
+        }else{
+            p = S.top();
+            if(p->right != nullptr && p->right != r){
+                p = p->right;
+                S.push(p);
+                p = p->left;
+            }else{
+                S.pop();
+                if(!(*visit)(p->val))
+                    return false;
+                r = p;
+                p = nullptr;
+            }
+        }
+    return true;
 }
 
 template <typename T>
@@ -77,4 +134,21 @@ void DestroyBinaryTree(BinaryTNode<T> * root){
     DestroyBinaryTree(root->right);
     delete root;
     root = nullptr;
+}
+
+template <typename T>
+bool LevelOrderTraverse(BinaryTNode<T> * ptree, bool (*visit)(T e)){
+    queue<BinaryTNode<T> *> Q;
+    BinaryTNode<T> * p = nullptr;
+    Q.push(ptree);
+    while(!Q.empty()){
+        p = Q.front();
+        if(!(*visit)(p->val))
+            return false;
+        if(p->left != nullptr)
+            Q.push(p->left);
+        if(p->right != nullptr)
+            Q.push(p->right);
+    }
+    return true;
 }
