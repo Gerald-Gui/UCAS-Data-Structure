@@ -143,6 +143,7 @@ bool LevelOrderTraverse(BinaryTNode<T> * ptree, bool (*visit)(T e)){
     Q.push(ptree);
     while(!Q.empty()){
         p = Q.front();
+        Q.pop();
         if(!(*visit)(p->val))
             return false;
         if(p->left != nullptr)
