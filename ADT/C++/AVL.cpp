@@ -40,8 +40,36 @@ template <typename T>
 AVLNode<T> *SingleLeftRotate(AVLNode<T> *p) {
     AVLNode<T> *rc = p->right;
     p->right = rc->left;
-    rc->right = p;
+    rc->left = p;
     UpdateHeight(p);
     UpdateHeight(rc);
     return rc;
+}
+
+template <typename T>
+int GetBalanceFactor(AVLNode<T> *p) {
+    if (p == nullptr) {
+        return 0;
+    }
+    return GetHeight(p->left) - GetHeight(p->right);
+}
+
+template <typename T>
+AVLNode<T> *ReBalance(AVLNode<T> *p) {
+    int bf  = GetBalanceFactor(p);
+    int lbf = GetBalanceFactor(p->left);
+    int rbf = GetBalanceFactor(p->right);
+    if (bf > 1) {
+        if (lbf <= 0) {
+            p->left = SingleLeftRotate(p->left);
+        }
+        return SingleRightRotate(p);
+    } else if (bf < -1) {
+        if (rbf > 0) {
+            p->right = SingleRightRotate(p->right);
+        }
+        return SingleLeftRotate(p);
+    } else {
+        return p;
+    }
 }
