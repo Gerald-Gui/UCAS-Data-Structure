@@ -29,8 +29,8 @@ ADT的编写主要参考课程所用教材^[严蔚敏，吴伟民：数据结构
 
 ##### C++^[由于OJ Judger选用的C++标准为C++14，以下内容包括modern C++部分在内都会尽量以C++14为准]
 
-1. C++的面向对象部分一般只应用`struct`，通常不会进行`class`的编写
-2. 模板的编写一般仅用于ADT内，不在OJ Assignments中应用。
+1. C++的面向对象部分一般只应用`struct`，即所有成员默认都是`public`
+2. 模板的编写一般仅用于ADT内，不在OJ Assignments和Projects中应用。
 
 ##### Modern C++
 
