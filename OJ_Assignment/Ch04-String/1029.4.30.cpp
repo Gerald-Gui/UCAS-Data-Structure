@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str;
+    getline(cin, str);
+
+    for (auto len = str.size() - 1; len > 0; len--) {
+        for (decltype(str.size()) j = 0; j + len <= str.size(); j++) {
+            string dest = str.substr(j, len);
+            for (decltype(str.size()) k = j + 1; k + len <= str.size(); k++) {
+                string tmp = str.substr(k, len);
+                if (dest == tmp) {
+                    cout << dest << " " << j << endl;
+                    return 0;
+                }
+            }
+        }
+    }
+
+    cout << -1 << endl;
+    return 0;
+}
