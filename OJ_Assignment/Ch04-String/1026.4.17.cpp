@@ -4,7 +4,7 @@ using namespace std;
 
 void Replace(string &S, const string &T, const string &V) {
     int pos = 0;
-    while ((pos = S.find(T, pos)) >= 0) {
+    while ((pos = S.find(T, pos)) != string::npos) {
         S.erase(pos, T.length());
         S.insert(pos, V);
         pos += V.length();
