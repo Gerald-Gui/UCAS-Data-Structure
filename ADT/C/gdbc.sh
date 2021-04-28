@@ -1,7 +1,7 @@
 if test -e ./$1.c
 then
     echo Compiling source code
-    gcc -g $1.c -o $1
+    gcc -g -std=c11 $1.c -lm -o $1
     echo Run $1
     ./$1
     echo delete output file : $1

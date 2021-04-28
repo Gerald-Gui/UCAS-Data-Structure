@@ -1,7 +1,7 @@
 if test -e ./$1.cpp
 then
-	echo g++ -g -std=c++14 $1.cpp -o $1
-	g++ -g $1.cpp -o $1
+	echo g++ -std=c++14 -O2 $1.cpp -lm -o $1
+	g++ -std=c++14 -O2 $1.cpp -lm -o $1
 	echo running $1
 	./$1
 	echo delete output file
