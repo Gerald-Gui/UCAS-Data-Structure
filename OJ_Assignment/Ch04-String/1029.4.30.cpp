@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-string SubStr(string src, size_t pos, size_t len) {
+string SubStr(string src, const size_t pos, const size_t len) {
     string sub = "";
     if (pos > src.size()) {
         return sub;
