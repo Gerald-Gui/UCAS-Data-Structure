@@ -1,35 +1,40 @@
 TAR ?= test
-SRC_EXT ?= cpp
+EXT ?= cpp
+EXEC ?= y
 
-ifeq ($(SRC_EXT),cpp)
+ifeq ($(EXT),cpp)
 	CPL ?= g++
 else
-ifeq ($(SRC_EXT),c)
+ifeq ($(EXT),c)
 	CPL ?= gcc
 endif
 endif
 
-ifeq ($(SRC_EXT),cpp)
-	STD ?= -std=c++14
+ifeq ($(EXT),cpp)
+	STD ?= c++14
 else
-ifeq ($(SRC_EXT),c)
-	STD ?= -std=c11
+ifeq ($(EXT),c)
+	STD ?= c11
 endif
 endif
 
 OLV ?= 2
 DBG ?= n
 ifeq ($(DBG),y)
-	CFLG ?= -g $(STD)
+	CFLG ?= -g -std=$(STD)
 	CLN ?= n
 else
 ifeq ($(DBG),n)
-	CFLG ?= $(STD) -O$(OLV)
+	CFLG ?= -std=$(STD) -O$(OLV)
 	CLN ?= y
 endif
 endif
 
-SRC := $(TAR).$(SRC_EXT)
+ifeq ($(EXEC),n)
+	CLN = n
+endif
+
+SRC := $(TAR).$(EXT)
 
 .PHONY:clean all fclean exec
 
@@ -42,11 +47,13 @@ $(TAR): $(SRC)
 	$(CPL) $(CFLG) $(SRC) -lm -o $(TAR)
 
 exec:
+ifeq ($(EXEC),y)
 ifeq ($(DBG),y)
 	gdb $(TAR)
 else
 ifeq ($(DBG),n)
 	./$(TAR)
+endif
 endif
 endif
 
