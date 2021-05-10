@@ -4,6 +4,7 @@
 !.gitignore
 !LICENSE
 !.gitattributes
+!Makefile
 
 !*.c
 !*.cpp
