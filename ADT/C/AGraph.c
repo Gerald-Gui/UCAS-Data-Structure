@@ -33,6 +33,35 @@ AGraph *DestroyAGraph(AGraph *G) {
     return NULL;
 }
 
+// head insertion
+void InsertArc(AGraph *G, Arc a) {
+    switch (G->kind) {
+        case UDG:
+            G->vtxs[a.tail].nxt = NewListNode(a.head, 1, G->vtxs[a.tail].nxt);
+        case DG:
+            G->vtxs[a.head].nxt = NewListNode(a.tail, 1, G->vtxs[a.head].nxt);
+            G->arc_amt++;
+            break;
+        case UDN:
+            G->vtxs[a.tail].nxt = NewListNode(a.head, a.weight, G->vtxs[a.tail].nxt);
+        case DN:
+            G->vtxs[a.head].nxt = NewListNode(a.tail, a.weight, G->vtxs[a.head].nxt);
+            G->arc_amt++;
+    }
+}
+
+void DeleteArc(AGraph *G, Arc a) {
+    ListNode *p = NULL;
+    if (G->kind == UDG || G->kind == UDN) {
+        p = G->vtxs[a.tail].nxt;
+        G->vtxs[a.tail].nxt = p->nxt;
+        free(p);
+    }
+    p = G->vtxs[a.head].nxt;
+    G->vtxs[a.head].nxt = p->nxt;
+    free(p);
+    G->arc_amt--;
+}
 
 ListNode *NewListNode(size_t vtx, arc_t info, ListNode *nxt) {
     ListNode *p = malloc(sizeof(ListNode));

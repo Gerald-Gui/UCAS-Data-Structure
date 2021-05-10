@@ -15,6 +15,11 @@ typedef struct {
     vtx_t info;
     ListNode *nxt;
 } VertexNode;
+typedef struct {
+    size_t head;
+    size_t tail;
+    size_t weight;
+} Arc;
 
 typedef struct {
     size_t vtx_amt;
@@ -25,6 +30,8 @@ typedef struct {
 
 AGraph *InitAGraph(size_t vtxnum, GraphKind k);
 AGraph *DestroyAGraph(AGraph *G);
+void InsertArc(AGraph *G, Arc a);
+void DeleteArc(AGraph *G, Arc a);
 
 // support funcs for LinkList
 ListNode *NewListNode(size_t vtx, arc_t info, ListNode *nxt);
