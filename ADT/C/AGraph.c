@@ -1,6 +1,8 @@
 #include "AGraph.h"
 #include <stdlib.h>
 
+//graph ops
+
 AGraph *InitAGraph(size_t vtxnum, GraphKind k) {
     AGraph *G = malloc(sizeof(AGraph));
     if (G == NULL) {
@@ -61,6 +63,27 @@ void DeleteArc(AGraph *G, Arc a) {
     G->arc_amt--;
 }
 
+size_t CountArcs(Arc *arr, AGraph *G) {
+    size_t cnt = 0;
+    if ((arr = malloc(G->arc_amt * sizeof(Arc))) == NULL) {
+        abort();
+    }
+    for (size_t v = 0; v < G->vtx_amt; v++) {
+        for (ListNode *p = G->vtxs[v].nxt; p != NULL; p = p->nxt) {
+            if ((G->kind == UDG || G->kind == UDN) && p->index > v) {
+                arr[cnt++] = NewArc(v, p->index, p->info);
+            } else if (G->kind == DG || G->kind == DN) {
+                arr[cnt++] = NewArc(v, p->index, p->info);
+            }
+        }
+    }
+}
+
+//
+// ===========================================================
+//
+// support funcs
+//
 ListNode *NewListNode(size_t vtx, arc_t info, ListNode *nxt) {
     ListNode *p = malloc(sizeof(ListNode));
     if (p == NULL) {
@@ -82,4 +105,8 @@ void DeleteListNode(size_t tar, ListNode *first) {
     pre->nxt = p->nxt;
     free(p);
     free(head);
+}
+
+inline Arc NewArc(size_t head, size_t tail, size_t weight) {
+    return (Arc){head, tail, weight};
 }

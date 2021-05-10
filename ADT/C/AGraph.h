@@ -32,9 +32,11 @@ AGraph *InitAGraph(size_t vtxnum, GraphKind k);
 AGraph *DestroyAGraph(AGraph *G);
 void InsertArc(AGraph *G, Arc a);
 void DeleteArc(AGraph *G, Arc a);
-void DeleteListNode(size_t tar, ListNode *first);
+size_t CountArcs(Arc *arr, AGraph *G);
 
 // support funcs for LinkList
 ListNode *NewListNode(size_t vtx, arc_t info, ListNode *nxt);
+void DeleteListNode(size_t tar, ListNode *first);
+Arc NewArc(size_t head, size_t tail, size_t weight);
 
 #endif
