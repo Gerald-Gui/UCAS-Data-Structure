@@ -77,6 +77,7 @@ size_t CountArcs(Arc *arr, AGraph *G) {
             }
         }
     }
+    return cnt;
 }
 
 //
