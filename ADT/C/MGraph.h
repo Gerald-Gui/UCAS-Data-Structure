@@ -23,5 +23,6 @@ MGraph *InitGraph(size_t vexnum, GraphKind k);
 MGraph *DestroyMGraph(MGraph *G);
 void InsertArc(MGraph *G, arc_t a);
 void DeleteArc(MGraph *G, arc_t a);
+size_t CountArc(arc_t *arr, MGraph *G);
 
 #endif

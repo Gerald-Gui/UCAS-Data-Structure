@@ -1,5 +1,6 @@
 #include "MGraph.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
 MGraph *InitGraph(size_t vexnum, GraphKind k) {
     MGraph *G = malloc(sizeof(MGraph));
@@ -74,4 +75,20 @@ void DeleteArc(MGraph *G, arc_t a) {
         case DN:
             G->arcs->base[a.head][a.tail] = tar;
     }
+}
+
+size_t CountArc(arc_t *arr, MGraph *G) {
+    size_t cnt = 0;
+    bool is_undirected = G->kind == UDN || G->kind == UDG;
+    if ((arr = malloc(G->anum * sizeof(arc_t))) == NULL) {
+        abort();
+    }
+    for (size_t v = 0; v < G->vnum; v++) {
+        for (size_t w = is_undirected ? v + 1 : 0; w < G->vnum; w++) {
+            if (G->arcs->base[v][w] != is_undirected ? 0 : INFTY) {
+                arr[cnt++] = (arc_t){v, w};
+            }
+        }
+    }
+    return cnt;
 }
