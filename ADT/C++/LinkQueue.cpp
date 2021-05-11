@@ -1,17 +1,17 @@
-template <typename T>
-struct ListNode{
-    T val;
-    ListNode<T> * nxt;
-    ListNode(): val(0), nxt(nullptr) {}
-    ListNode(T e): val(e), nxt(nullptr) {}
-    ListNode(T e, ListNode<T> * p): val(e), nxt(p) {}
-};
+#include <cstddef>
 
 template <typename T>
-struct LinkQueue{
-    ListNode<T> * front;
-    ListNode<T> * rear;
+class LinkQueue {
+private:
+    struct ListNode {
+        T val;
+        ListNode *nxt;
+        ListNode(T data = 0, ListNode *ptr = nullptr) : val(data), nxt(ptr) {};
+    };
+    ListNode *front;
+    ListNode *rear;
 
+public:
     //initialize an empty queue
     LinkQueue();
     //destroy queue Q
@@ -19,83 +19,90 @@ struct LinkQueue{
     //set queue Q empty
     void Clear();
     //judge whether queue Q is empty
-    inline bool IsEmpty();
+    bool IsEmpty();
     //return the num of elems in queue Q
-    int Length();
+    size_t Length();
     //return the head elem of Q with e
-    bool GetHead(T & e);
+    bool GetHead(T &dest);
     //insert new elem e to tail of Q
-    bool EnQueue(T e);
+    void EnQueue(T src);
     //delete head elem of Q and return it with e
-    bool DeQueue(T & e);
+    bool DeQueue(T &dest);
     //call func visit() from front to rear
-    bool Traverse(bool (*visit)(T e));
+    bool Traverse(bool (*visit)(T elem));
 };
 
 template <typename T>
-LinkQueue<T>::LinkQueue(){
-    front = rear = new ListNode<T>(0, nullptr);
+LinkQueue<T>::LinkQueue() {
+    front = rear = new ListNode(0, nullptr);
 }
 
 template <typename T>
-LinkQueue<T>::~LinkQueue(){
+LinkQueue<T>::~LinkQueue() {
     this->Clear();
     delete front;
-    front = rear = nullptr;
 }
 
 template <typename T>
-void LinkQueue<T>::Clear(){
-    T tmp;
-    while(this->DeQueue(tmp))
-        ;
+void LinkQueue<T>::Clear() {
+    ListNode *p = front->nxt;
+    while (p != nullptr) {
+        front->nxt = p->nxt;
+        delete p;
+        p = front->nxt;
+    }
+    rear = front;
 }
 
 template <typename T>
-inline bool LinkQueue<T>::IsEmpty(){
-    return front == rear;
-}
-
-template <typename T>
-int LinkQueue<T>::Length(){
-    ListNode<T> * p = front;
-    int cnt;
-    for(cnt = 0; p != rear; p = p->nxt)
+size_t LinkQueue<T>::Length() {
+    size_t cnt = 0;
+    ListNode *p = front;
+    while (p != rear) {
         cnt++;
+        p = p->nxt;
+    }
     return cnt;
 }
 
 template <typename T>
-bool LinkQueue<T>::GetHead(T & e){
-    if(this->IsEmpty())
+inline bool LinkQueue<T>::IsEmpty() {
+    return front == rear;
+}
+
+template <typename T>
+bool LinkQueue<T>::GetHead(T &dest) {
+    if (IsEmpty()) {
         return false;
-    e = front->nxt->val;
+    }
+    dest = front->nxt->val;
     return true;
 }
 
 template <typename T>
-bool LinkQueue<T>::EnQueue(T e){
-    rear->nxt = new ListNode<T>(e, nullptr);
+inline void LinkQueue<T>::EnQueue(T src) {
+    rear->nxt = new ListNode(src, nullptr);
     rear = rear->nxt;
-    return true;
 }
 
 template <typename T>
-bool LinkQueue<T>::DeQueue(T & e){
-    if(this->IsEmpty())
+bool LinkQueue<T>::DeQueue(T &dest) {
+    if (IsEmpty()) {
         return false;
-    e = front->nxt->val;
-    ListNode<T> * p = front;
+    }
+    dest = front->nxt->val;
+    ListNode *p = front;
     front = front->nxt;
     delete p;
-    p = nullptr;
     return true;
 }
 
 template <typename T>
-bool LinkQueue<T>::Traverse(bool (*visit)(T e)){
-    for(ListNode<T> * p = front->nxt; p != nullptr; p = p->nxt)
-        if(!(*visit)(p->val))
+bool Traverse(bool (*visit)(T elem)) {
+    for (ListNode *p = front->nxt; p != nullptr; p = p->nxt) {
+        if (!(*visit)(p->val)) {
             return false;
+        }
+    }
     return true;
 }
