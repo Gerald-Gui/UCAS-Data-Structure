@@ -1,6 +1,6 @@
 // show how to use swap func in swap.h
 
-#define swap(type, a, b) (swap_ ## type ((a), (b)))
+#define swap(type, a, b) (swap_ ## type((a), (b)))
 
 #define _type int
 #define _func swap_int
