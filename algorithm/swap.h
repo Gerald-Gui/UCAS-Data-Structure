@@ -1,11 +1,7 @@
-#ifndef SWAP_H
-#define SWAP_H
-
-#include <stddef.h>
-
-typedef unsigned char byte;
-typedef unsigned char *byte_ptr;
-
-void swap(byte_ptr pa, byte_ptr pb, size_t size);
-
-#endif
+void _func(_type *a, _type *b) {
+    _type tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+#undef _type
+#undef _func
