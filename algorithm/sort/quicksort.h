@@ -25,17 +25,3 @@
 #define quicksort_ipl(T) _quicksort_ipl(T)
 
 #endif
-
-/*
-        int i, last;
-        if(left>=right)
-                return;
-        swap(array+left,array+(left+right)/2);
-        last = left;
-        for(i=left+1;i<=right;i++)
-                if(array[i]<array[left])
-                        swap(array+ ++last,array+i);
-        swap(array+left,array+last);
-        quick(array,left,last-1);
-        quick(array,last+1,right);
-*/
