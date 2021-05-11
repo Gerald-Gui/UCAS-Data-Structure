@@ -1,7 +1,14 @@
-void _func(_type *a, _type *b) {
-    _type tmp = *a;
-    *a = *b;
-    *b = tmp;
+#ifndef SWAP_H
+#define SWAP_H
+
+#define _swap(T) swap$_##T##_$
+#define swap(T) _swap(T)
+
+#define _swap_ipl(T) void swap(T)(T *a, T *b) {\
+    T tmp = *a;\
+    *a = *b;\
+    *b = tmp;\
 }
-#undef _type
-#undef _func
+#define swap_ipl(T) _swap_ipl(T)
+
+#endif
