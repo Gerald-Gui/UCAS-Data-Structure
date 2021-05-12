@@ -2,10 +2,8 @@
 #define SWAP_H
 
 #include <stddef.h>
+#define size_t size_t   // a meaningless macro, just to adjust my editor highlight
 
-typedef unsigned char byte;
-typedef unsigned char *byte_ptr;
-
-void swap(byte_ptr pa, byte_ptr pb, size_t size);
+void swap(void *pa, void *pb, size_t size);
 
 #endif

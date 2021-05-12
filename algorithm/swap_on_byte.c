@@ -2,11 +2,12 @@
 #include <stdio.h>
 
 // swap on bytes
-void swap(byte_ptr pa, byte_ptr pb, size_t size) {
-    for (size_t i = 0; i < size; i++) {
-        pa[i] = pa[i] ^ pb[i];
-        pb[i] = pa[i] ^ pb[i];
-        pa[i] = pa[i] ^ pb[i];
+void swap(void *pa, void *pb, size_t size) {
+    while (size > 0) {
+        size--;
+        ((char*)pa)[size] = ((char*)pa)[size] ^ ((char*)pb)[size];
+        ((char*)pb)[size] = ((char*)pa)[size] ^ ((char*)pb)[size];
+        ((char*)pa)[size] = ((char*)pa)[size] ^ ((char*)pb)[size];
     }
 }
 
@@ -16,9 +17,9 @@ void swap(byte_ptr pa, byte_ptr pb, size_t size) {
 //    float fa = 1.0, fb = 2.0;
 //    char ca = 'a', cb = 'A';
 //
-//    swap((byte_ptr)&a, (byte_ptr)&b, sizeof(int));
-//    swap((byte_ptr)&fa, (byte_ptr)&fb, sizeof(float));
-//    swap((byte_ptr)&ca, (byte_ptr)&cb, sizeof(char));
+//    swap(&a, &b, sizeof(int));
+//    swap(&fa, &fb, sizeof(float));
+//    swap(&ca, &cb, sizeof(char));
 //
 //    printf("%d %d\n", a, b);
 //    printf("%f %f\n", fa, fb);
