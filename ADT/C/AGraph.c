@@ -1,5 +1,6 @@
 #include "AGraph.h"
 #include <stdlib.h>
+#include <string.h>
 
 //graph ops
 
@@ -78,6 +79,32 @@ size_t CountArcs(Arc *arr, AGraph *G) {
         }
     }
     return cnt;
+}
+
+void DFSGraph(AGraph *G, bool (*visit)(vtx_t v)) {
+    bool *visited = malloc(G->vtx_amt * sizeof(bool));
+    if (visited == NULL) {
+        abort();
+    }
+    memset(visited, 0, G->vtx_amt * sizeof(bool));
+    for (size_t i = 0; i < G->vtx_amt; i++) {
+        if (!visited[i]) {
+            DFS(G, i, visited, visit);
+        }
+    }
+    free(visited);
+}
+
+void DFS(AGraph *G, size_t x, bool *visited, bool (*visit)(vtx_t v)) {
+    ListNode *p = G->vtxs[x].nxt;
+    visited[x] = true;
+    (*visit)(G->vtxs[x].info);
+    while (p != NULL) {
+        if (!visited[p->index]) {
+            DFS(G, p->index, visited, visit);
+        }
+        p = p->nxt;
+    }
 }
 
 //
