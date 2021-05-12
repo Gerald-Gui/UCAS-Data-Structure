@@ -107,6 +107,34 @@ void DFS(AGraph *G, size_t x, bool *visited, bool (*visit)(vtx_t v)) {
     }
 }
 
+void BFS(AGraph *G, bool (*func)(vtx_t v)) {
+    size_t u;
+    ListNode *p = NULL;
+    Queue *que = InitQueue();
+    bool *visited = malloc(G->vtx_amt * sizeof(bool));
+    if (visited == NULL) {
+        abort();
+    }
+    memset(visited, 0, G->vtx_amt * sizeof(bool));
+    for (size_t v = 0; v < G->vtx_amt; v++) {
+        if (!visited[v]) {
+            visited[v] = true;
+            (*func)(G->vtxs[v].info);
+            EnQueue(que, v);
+            while (!QueueIsEmpty(que)) {
+                u = DeQueue(que);
+                for (p = G->vtxs[u].nxt; p != NULL; p = p->nxt) {
+                    if (!visited[p->index]) {
+                        visited[p->index];
+                        (*func)(G->vtxs[p->index].info);
+                        EnQueue(que, p->index);
+                    }
+                }
+            }
+        }
+    }
+}
+
 //
 // ===========================================================
 //
@@ -137,4 +165,53 @@ void DeleteListNode(size_t tar, ListNode *first) {
 
 inline Arc NewArc(size_t head, size_t tail, size_t weight) {
     return (Arc){head, tail, weight};
+}
+
+QNode *NewQNode(size_t elem, QNode *ptr) {
+    QNode *p = malloc(sizeof(QNode));
+    if (p == NULL) {
+        abort();
+    }
+    p->val = elem;
+    p->nxt = ptr;
+    return p;
+}
+
+Queue *InitQueue(void) {
+    Queue *que = malloc(sizeof(Queue));
+    if (que == NULL) {
+        abort();
+    }
+    que->front = que->rear = NewQNode(0, NULL);
+    return que;
+}
+
+void EnQueue(Queue *que, size_t elem) {
+    QNode *p = NewQNode(elem, NULL);
+    que->rear->nxt = p;
+    que->rear = p;
+}
+
+size_t DeQueue(Queue *que) {
+    size_t ret = que->front->nxt->val;
+    QNode *p = que->front;
+    que->front = p->nxt;
+    free(p);
+    return ret;
+}
+
+inline bool QueueIsEmpty(Queue *que) {
+    return que->front == que->rear;
+}
+
+Queue *DestroyQueue(Queue *que) {
+    QNode *p = que->front;
+    while (!QueueIsEmpty(que)) {
+        que->front = p->nxt;
+        free(p);
+        p = que->front;
+    }
+    free(p);
+    free(que);
+    return NULL;
 }
