@@ -1,5 +1,7 @@
 #include "swap_on_byte.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // swap on bytes
 void swap(void *pa, void *pb, size_t size) {
@@ -10,6 +12,15 @@ void swap(void *pa, void *pb, size_t size) {
         ((char*)pa)[size] = ((char*)pa)[size] ^ ((char*)pb)[size];
     }
 }
+
+// the theory equals to below:
+//void swap(void *pa, void *pb, size_t size) {
+//    void *p = malloc(size);
+//    memcpy(p, pa, size);
+//    memcpy(pa, pb, size);
+//    memcpy(pb, p, size);
+//    free(p);
+//}
 
 // main func to show swap usage
 //int main() {
