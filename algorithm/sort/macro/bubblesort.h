@@ -1,7 +1,7 @@
 #ifndef BUBBLE_SORT_H
 #define BUBBLE_SORT_H
 
-#include "../swap.h"
+#include "../../swap.h"
 #include <stddef.h>
 #define size_t size_t
 

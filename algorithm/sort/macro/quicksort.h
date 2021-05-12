@@ -1,7 +1,7 @@
 #ifndef QUICK_SORT_H
 #define QUICK_SORT_H
 
-#include "../swap.h"
+#include "../../swap.h"
 
 #define _quicksort(T) quicksort$_##T##_$
 #define quicksort(T) _quicksort(T)

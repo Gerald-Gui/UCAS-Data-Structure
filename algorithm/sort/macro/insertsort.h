@@ -1,7 +1,7 @@
 #ifndef INSERT_SORT_H
 #define INSERT_SORT_H
 
-#include "../swap.h"
+#include "../../swap.h"
 #include <stddef.h>
 
 #define _insertsort(T) insertsort$_##T##_$

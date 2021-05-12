@@ -1,7 +1,7 @@
 #ifndef SELECT_SORT_H
 #define SELECT_SORT_H
 
-#include "../swap.h"
+#include "../../swap.h"
 #include <stddef.h>
 
 #define _selectsort(T) selectsort$_##T##_$
