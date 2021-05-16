@@ -83,7 +83,7 @@ inline elem_t *GetFront(Deque *deq) {
 }
 
 // return a pointer to the last elem
-// is empty, return NULL
+// if empty, return NULL
 inline elem_t *GetBack(Deque *deq) {
     if (IsDequeEmpty(deq)) {
         return NULL;
