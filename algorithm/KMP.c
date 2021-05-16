@@ -3,10 +3,10 @@
 int *BuildNext(const char *str) {
     size_t len = strlen(str);
     size_t j = 0;
-    int *next = malloc(len * sizeof(len));
-    int t = next[0] = -1;
+    size_t *next = malloc(len * sizeof(size_t));
+    size_t t = next[0] = 0;
     while (j < len - 1) {
-        if (t < 0 || str[j] == str[t]) {
+        if (t == 0 || str[j] == str[t]) {
             j++;
             t++;
             next[j] = str[j] != str[t] ? t : next[t];
@@ -20,7 +20,7 @@ int *BuildNext(const char *str) {
 size_t KMPIndex(const char *haystack, const char *needle, size_t pos) {
     size_t len_haystack = strlen(haystack);
     size_t len_needle = strlen(needle);
-    int *next = BuildNext(needle);
+    size_t *next = BuildNext(needle);
     size_t j = pos;
     size_t k = 0;
     if (pos + len_needle > len_haystack) {
