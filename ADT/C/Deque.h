@@ -20,11 +20,11 @@ void ClearDeque(Deque *deq);
 size_t DequeSize(Deque *deq);
 bool IsDequeEmpty(Deque *deq);
 void PushBack(Deque *deq, elem_t val);
-elem_t PopBack(Deque *deq);
+void PopBack(Deque *deq);
 void PushFront(Deque *deq, elem_t val);
-elem_t PopFront(Deque *deq);
+void PopFront(Deque *deq);
 
-elem_t GetFront(Deque *deq);
-elem_t GetBack(Deque *deq);
+elem_t *GetFront(Deque *deq);
+elem_t *GetBack(Deque *deq);
 
 #endif

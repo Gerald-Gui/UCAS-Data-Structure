@@ -44,9 +44,11 @@ void PushBack(Deque *deq, elem_t val) {
     deq->rear = (deq->rear + 1) % deq->cap;
 }
 
-// check deque is not empty before you pop
-elem_t PopBack(Deque *deq) {
-    elem_t ret = deq->base[deq->rear];
+// only delete the last elem
+inline void PopBack(Deque *deq) {
+    if (IsDequeEmpty(deq)) {
+        return;
+    }
     deq->rear = deq->rear == 0 ? deq->cap - 1 : deq->rear - 1;
 }
 
@@ -63,17 +65,28 @@ void PushFront(Deque *deq, elem_t val) {
     deq->front = dest;
 }
 
-// check deque is not empty before you pop
-elem_t PopFront(Deque *deq) {
-    elem_t ret = deq->base[deq->front];
+// only delete the last elem
+inline void PopFront(Deque *deq) {
+    if (IsDequeEmpty(deq)) {
+        return;
+    }
     deq->front = (deq->front + 1) % deq->cap;
-    return ret;
 }
 
-inline elem_t GetFront(Deque *deq) {
-    return deq->base[deq->front];
+// return a pointer to the first elem
+// if empty, return NULL
+inline elem_t *GetFront(Deque *deq) {
+    if (IsDequeEmpty(deq)) {
+        return NULL;
+    }
+    return deq->base + deq->front;
 }
 
-inline elem_t GetBack(Deque *deq) {
-    return deq->rear == 0 ? deq->base[deq->cap - 1] : deq->base[deq->rear - 1];
+// return a pointer to the last elem
+// is empty, return NULL
+inline elem_t *GetBack(Deque *deq) {
+    if (IsDequeEmpty(deq)) {
+        return NULL;
+    }
+    return deq->base + (deq->rear == 0 ? deq->cap : deq->rear) - 1;
 }
