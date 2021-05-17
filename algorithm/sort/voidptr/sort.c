@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+void sort(void *beg, void *end, bool (*cmpless)(const void *a, const void *b)) {
+    quicksort(beg, 0, end - beg - 1, end - beg, cmpless);
+}
+
 void quicksort(void *base, long lo, long hi, size_t size, bool (*cmpless)(const void *a, const void *b)) {
     long i, last;
     if (lo >= hi) {
