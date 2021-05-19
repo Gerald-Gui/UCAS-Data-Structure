@@ -2,20 +2,21 @@
 
 // ignore \n, ungetc EOF
 // if read file end, return NULL
-// otherwise return ptr line
+// otherwise return the tail ptr of the string
+// you can use the return value to calculate strlen easily
 char *fgetline(char *line, size_t lim, FILE *stream) {
-    size_t i = 0;
     char c;
-    while (--lim > 0 && (c = fgetc(stream)) != EOF && c != '\n') {
-        line[i++] = c;
+    char *p = NULL;
+    for (p = line; --lim > 0 && (c = getchar()) != EOF && c != '\n'; p++) {
+        *p = c;
     }
-    line[i] = '\0';
-    if (c == EOF && i == 0) {
+    *p = '\0';
+    if (c == EOF && p == line) {
         return NULL;
-    } else if (c == EOF && i != 0) {
+    } else if (c == EOF && p != line) {
         ungetc(c, stream);
-        return line;
+        return p;
     } else {
-        return line;
+        return p;
     }
 }
