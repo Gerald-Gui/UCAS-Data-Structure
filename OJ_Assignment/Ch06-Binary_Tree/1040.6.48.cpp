@@ -40,13 +40,13 @@ bool GetPath(tnode *ptree, vector<char> &path, char tar) {
     return false;
 }
 
-string OverlapPath(const vector<char> &path1, const vector<char> &path2) {
+char CloseAncestor(const vector<char> &path1, const vector<char> &path2) {
     auto it1 = path1.begin();
     auto it2 = path2.begin();
-    string ret;
+    char ret = '\0';
     while (it1 != path1.end() && it2 != path2.end()) {
         if (*it1 == *it2) {
-            ret += *it1;
+            ret = *it1;
         } else {
             break;
         }
@@ -59,18 +59,12 @@ string OverlapPath(const vector<char> &path1, const vector<char> &path2) {
 int main() {
     tnode *ptree;
     CreateTree(ptree);
-    string p, q, res;
+    string p, q;
     cin >> p >> q;
 
     vector<char> ppath, qpath;
     GetPath(ptree, ppath, p[0]);
     GetPath(ptree, qpath, q[0]);
-    res = OverlapPath(ppath, qpath);
-    auto rit = res.rbegin();
-    if ((*rit == p[0] || *rit == q[0]) && rit + 1 != res.rend()) {
-        cout << *(rit + 1) << endl;
-    } else {
-        cout << *rit << endl;
-    }
+    cout << CloseAncestor(ppath, qpath) << endl;
     return 0;
 }
