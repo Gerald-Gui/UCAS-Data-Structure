@@ -8,20 +8,11 @@ using namespace std;
 #define STR_LEN 1000
 
 char *fgetline(char *line, size_t lim, FILE *stream) {
-    char c;
-    char *p = NULL;
-    for (p = line; --lim > 0 && (c = getchar()) != EOF && c != '\n'; p++) {
-        *p = c;
-    }
+    char c, *p = NULL;
+    for (p = line; --lim > 0 && (c = fgetc(stream)) != EOF && c != '\n'; *(p++) = c) {}
     *p = '\0';
-    if (c == EOF && p == line) {
-        return NULL;
-    } else {
-        if (c == EOF) {
-            ungetc(c, stream);
-        }
-        return line;
-    }
+    if (c == EOF && p != line) ungetc(c, stream);
+    return c == EOF && p == line ? NULL : line;
 }
 
 size_t *BuildDynamicArray(char *str, size_t *arr) {
