@@ -2,10 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 
-void sort(void *beg, void *end, bool (*cmpless)(const void *a, const void *b)) {
-    quicksort(beg, 0, end - beg - 1, end - beg, cmpless);
+void sort(void *beg, void *end, size_t size, bool (*cmpless)(const void *a, const void *b)) {
+    //quicksort(beg, 0, end - beg - 1, end - beg, cmpless);
+    quicksort(beg, beg - end, size, cmpless);
 }
 
+void quicksort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const void *a, const void *b)) {
+    typedef struct {
+        size_t lo;
+        size_t hi;
+    } pair;
+
+    if (arrsize == 0) {
+        return;
+    }
+    size_t sp, left, right;
+    void *mid = malloc(size);
+    pair tmp, *stk = malloc(arrsize * sizeof(pair));
+    sp = 0;
+    stk[sp++] = (pair){0, arrsize - 1};
+    while (sp != 0) {
+        tmp = stk[--sp];
+        if (tmp.lo >= tmp.hi) {
+            continue;
+        }
+        memcpy(mid, (char*)base + size * (tmp.lo + tmp.hi) / 2, size);
+        left = tmp.lo;
+        right = tmp.hi;
+        do {
+            while ((*cmpless)((char*)base + size * left, mid)) {
+                left++;
+            }
+            while ((*cmpless)(mid, (char*)base + size * right)) {
+                right++;
+            }
+            if (left <= right) {
+                swap((char*)base + left * size, (char*)base + right * size, size);
+                left++;
+                right++;
+            }
+        } while (left <= right);
+        if (tmp.lo < right) {
+            stk[sp++] = (pair){tmp.lo, right};
+        }
+        if (left < tmp.hi) {
+            stk[sp++] = (pair){left, tmp.hi};
+        }
+    }
+    free(mid);
+    free(stk);
+}
+
+/* recursive edition from The C Programming Language
 void quicksort(void *base, long lo, long hi, size_t size, bool (*cmpless)(const void *a, const void *b)) {
     long i, last;
     if (lo >= hi) {
@@ -22,6 +70,7 @@ void quicksort(void *base, long lo, long hi, size_t size, bool (*cmpless)(const 
     quicksort(base, lo, last - 1, size, cmpless);
     quicksort(base, last + 1, hi, size, cmpless);
 }
+*/
 
 void bubblesort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const void *a, const void *b)) {
     size_t i, j;
