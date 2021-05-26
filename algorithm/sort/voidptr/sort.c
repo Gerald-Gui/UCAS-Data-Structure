@@ -76,8 +76,8 @@ void bubblesort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const v
     size_t i, j;
     for (i = 0; i < arrsize - 1; i++) {
         for (j = arrsize - 1; j > i; j--) {
-            if (!(*cmpless)(base + j -1, base + j)) {
-                swap(base + j - 1, base + j, size);
+            if (!(*cmpless)((char*)base + size * (j - 1), (char*)base + size * j)) {
+                swap((char*)base + size * (j - 1), (char*)base + size * j, size);
             }
         }
     }
@@ -88,11 +88,11 @@ void selectsort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const v
     for (i = 0; i < arrsize - 1; i++) {
         min = i;
         for (j = i + 1; j < arrsize; j++) {
-            if ((*cmpless)(base + j, base + min)) {
+            if ((*cmpless)((char*)base + size * j, (char*)base + size * min)) {
                 min = j;
             }
         }
-        swap(base + i, base + min, size);
+        swap((char*)base + size * i, (char*)base + size * min, size);
     }
 }
 
@@ -100,18 +100,18 @@ void insertsort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const v
     size_t i, j;
     void *v = malloc(size);
     for (i = arrsize - 1; i > 0; i--) {
-        if (!(*cmpless)(base + i - 1, base + i)) {
-            swap(base + i - 1, base + i, size);
+        if (!(*cmpless)((char*)base + size * (i - 1), (char*)base + i)) {
+            swap((char*)base + size * (i - 1), (char*)base + size * i, size);
         }
     }
     for (i = 2; i < arrsize; i++) {
         j = i;
-        memcpy(v, base + i, size);
-        while ((*cmpless)(v, base + j - 1)) {
-            memcpy(base + j, base + j - 1, size);
+        memcpy(v, (char*)base + size * i, size);
+        while ((*cmpless)(v, (char*)base + size * (j - 1))) {
+            memcpy((char*)base + size * j, (char*)base + size * (j - 1), size);
             j--;
         }
-        memcpy(base + j, v, size);
+        memcpy((char*)base + size * j, v, size);
     }
     free(v);
 }
@@ -123,12 +123,12 @@ void shellsort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const vo
     while (h > 0) {
         for (i = h; i < arrsize; i++) {
             j = i;
-            memcpy(v, base + i, size);
-            while (j >= h && (*cmpless)(v, base + j - h)) {
-                memcpy(base + j, base + j - h, size);
+            memcpy(v, (char*)base + size * i, size);
+            while (j >= h && (*cmpless)(v, (char*)base + size * (j - h))) {
+                memcpy((char*)base + size * j, (char*)base + size * (j - h), size);
                 j -= h;
             }
-            memcpy(base + j, v, size);
+            memcpy((char*)base + size * j, v, size);
         }
         h /= 3;
     }
