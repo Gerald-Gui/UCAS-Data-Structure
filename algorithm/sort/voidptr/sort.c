@@ -8,14 +8,9 @@ void sort(void *beg, void *end, size_t size, bool (*cmpless)(const void *a, cons
 }
 
 void quicksort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const void *a, const void *b)) {
-    typedef struct {
-        size_t lo;
-        size_t hi;
-    } pair;
+    typedef struct { size_t lo, hi; } pair;
 
-    if (arrsize == 0) {
-        return;
-    }
+    if (arrsize == 0) { return; }
     size_t sp, left, right;
     void *mid = malloc(size);
     pair tmp, *stk = malloc(arrsize * sizeof(pair));
@@ -23,31 +18,21 @@ void quicksort(void *base, size_t arrsize, size_t size, bool (*cmpless)(const vo
     stk[sp++] = (pair){0, arrsize - 1};
     while (sp != 0) {
         tmp = stk[--sp];
-        if (tmp.lo >= tmp.hi) {
-            continue;
-        }
+        if (tmp.lo >= tmp.hi) { continue; }
         memcpy(mid, (char*)base + size * (tmp.lo + tmp.hi) / 2, size);
         left = tmp.lo;
         right = tmp.hi;
         do {
-            while ((*cmpless)((char*)base + size * left, mid)) {
-                left++;
-            }
-            while ((*cmpless)(mid, (char*)base + size * right)) {
-                right++;
-            }
+            while ((*cmpless)((char*)base + size * left, mid)) { left++; }
+            while ((*cmpless)(mid, (char*)base + size * right)) { right--; }
             if (left <= right) {
                 swap((char*)base + left * size, (char*)base + right * size, size);
                 left++;
-                right++;
+                right = right == 0 ? left - 1 : right - 1;
             }
         } while (left <= right);
-        if (tmp.lo < right) {
-            stk[sp++] = (pair){tmp.lo, right};
-        }
-        if (left < tmp.hi) {
-            stk[sp++] = (pair){left, tmp.hi};
-        }
+        if (tmp.lo < right) { stk[sp++] = (pair){tmp.lo, right}; }
+        if (left < tmp.hi) { stk[sp++] = (pair){left, tmp.hi}; }
     }
     free(mid);
     free(stk);
