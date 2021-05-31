@@ -53,6 +53,7 @@ bool DFS(size_t beg, size_t tar, LinkList *graph, size_t k, bool *visited) {
             if (DFS(p->val, tar, graph, k - 1, visited)) {
                 return true;
             }
+            visited[p->val] = false;
         }
     }
     return false;
@@ -83,6 +84,7 @@ int main(void) {
     while ((p = strtok(nullptr, ",")) != nullptr) {
         StrSplitInto2(p, head, tail, '-');
         InsertArc(head, tail, graph);
+        InsertArc(tail, head, graph);
     }
 
     puts(FindLenkPath(beg, tar, graph, k, n) ? "yes" : "no");
