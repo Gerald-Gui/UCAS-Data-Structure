@@ -6,7 +6,8 @@ using namespace std;
 struct ListNode {
     int val;
     ListNode *nxt;
-    ListNode(int e = 0, ListNode *p = nullptr): val(e), nxt(p) {}
+    ListNode(int e = 0, ListNode *p = nullptr) :
+        val(e), nxt(p) {}
 };
 
 struct LinkQueue {
@@ -37,7 +38,7 @@ int main() {
     LinkQueue Q;
 
     cin >> n;
-    for (int i = 0; i < n ; i++) {
+    for (int i = 0; i < n ; ++i) {
         if (i != n - 1) {
             scanf("%d,", &tmp);
         } else {
@@ -46,7 +47,7 @@ int main() {
         Q.EnQueue(tmp);
     }
     
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; ++i) {
         if (i == n - 1) {
             printf("%d\n", Q.DeQueue());
         } else {

@@ -1,30 +1,34 @@
 #include <cstdio>
 #include <cctype>
 
-typedef struct ListNode{
+typedef struct ListNode {
     int val;
-    ListNode * nxt;
-} * LinkList;
+    ListNode *nxt;
 
-void PrintLinkList(LinkList p){
-    if(p->nxt == nullptr){
+    ListNode(int e = 0, ListNode *ptr = nullptr) :
+        val(e), nxt(ptr) {}
+} *LinkList;
+
+void PrintLinkList(LinkList p) {
+    if (p->nxt == nullptr) {
         printf("NULL\n");
         return;
     }
     p = p->nxt;
-    while(p != nullptr){
+    while (p != nullptr) {
         printf("%c", p->val);
-        if(p->nxt != nullptr)
+        if (p->nxt != nullptr) {
             printf(",");
+        }
         p = p->nxt;
     }
-    printf("\n");
+    putchar('\n');
 }
 
-void ReverseList(LinkList L){
-    ListNode * p = L->nxt, * q = nullptr;
+void ReverseList(LinkList L) {
+    ListNode *p = L->nxt, *q = nullptr;
     L->nxt = nullptr;
-    while(p != nullptr){
+    while (p != nullptr) {
         q = p;
         p = p->nxt;
         q->nxt = L->nxt;
@@ -32,21 +36,19 @@ void ReverseList(LinkList L){
     }
 }
 
-int main(){
+int main() {
     LinkList L = nullptr;
-    ListNode * p = nullptr;
+    ListNode *p = nullptr;
     char c;
 
     p = L = new ListNode;
-    L->nxt = nullptr;
 
-    while((c = getchar()) != EOF)
-        if(c != ',' && !isspace(c)){
-            p->nxt = new ListNode;
-            p->nxt->nxt = nullptr;
-            p->nxt->val = c;
+    while ((c = getchar()) != EOF) {
+        if (c != ',' && !isspace(c)) {
+            p->nxt = new ListNode(c);
             p = p->nxt;
         }
+    }
     
     ReverseList(L);
     PrintLinkList(L);

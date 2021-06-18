@@ -2,49 +2,52 @@
 #include <cstdio>
 using namespace std;
 
-typedef struct DuListNode{
+typedef struct DuListNode {
     int val;
-    DuListNode * pre;
-    DuListNode * nxt;
+    DuListNode *pre;
+    DuListNode *nxt;
     int freq;
     int seq;
-} * DuLinkList;
+} *DuLinkList;
 
-void PrintDuLinkList(DuLinkList L){
-    DuListNode * p = L->nxt;
-    if(p == L){
+void PrintDuLinkList(DuLinkList L) {
+    DuListNode *p = L->nxt;
+    if (p == L) {
         printf("NULL\n");
         return;
     }
-    while(p != L){
+    while (p != L) {
         printf("%d ", p->val);
         p = p->nxt;
     }
-    printf("\n");
+    putchar('\n');
 }
 
-DuListNode * LocateElem(DuLinkList L, int e){
-    for(DuListNode * p = L->nxt; p != L; p = p->nxt)
-        if(p->val == e){
-            p->freq++;
+DuListNode *LocateElem(DuLinkList L, int e) {
+    for (auto p = L->nxt; p != L; p = p->nxt) {
+        if (p->val == e) {
+            ++p->freq;
             return p;
         }
+    }
     return nullptr;
 }
 
-void MoveDuListNdoe(DuLinkList L, DuListNode * p){
-    DuListNode * q = p->pre;
-    while(q != L){
-        if(q->freq > p->freq)
+void MoveDuListNdoe(DuLinkList L, DuListNode *p) {
+    DuListNode *q = p->pre;
+    while (q != L) {
+        if (q->freq > p->freq) {
             break;
-        if(q->freq == p->freq && q->seq < p->seq)
+        }
+        if (q->freq == p->freq && q->seq < p->seq) {
             break;
+        }
         q = q->pre;
     }
-    if(p != q){
+    if (p != q) {
         p->pre->nxt = p->nxt;
         p->nxt->pre = p->pre;
-        DuListNode * q_nxt = q->nxt;
+        auto q_nxt = q->nxt;
         q->nxt = p;
         q_nxt->pre = p;
         p->pre = q;
@@ -52,15 +55,15 @@ void MoveDuListNdoe(DuLinkList L, DuListNode * p){
     }
 }
 
-int main(){
+int main() {
     int n;
     DuLinkList head = new DuListNode;
     head->nxt = head->pre = head;
     
-    DuListNode * p = head;
+    DuListNode *p = head;
     
     cin >> n;
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         p->nxt = new DuListNode;
         p->nxt->nxt = head;
         p->nxt->pre = p;
@@ -71,10 +74,11 @@ int main(){
     head->pre = p;
 
     int cnt = 1, tmp;
-    while(cin >> tmp){
+    while (cin >> tmp) {
         p = LocateElem(head, tmp);
-        if(p->seq == 0)
+        if (p->seq == 0) {
             p->seq = cnt++;
+        }
         MoveDuListNdoe(head, p);
     }
     

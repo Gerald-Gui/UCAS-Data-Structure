@@ -2,23 +2,24 @@
 
 using namespace std;
 
-typedef struct ListNode{
+typedef struct ListNode {
     int val;
-    ListNode * nxt;
-} * LinkList;
+    ListNode *nxt;
+} *LinkList;
 
 void PrintLinkList(LinkList p){
-    if(p->nxt == nullptr)
+    if (p->nxt == nullptr) {
         return;
+    }
     p = p->nxt;
-    while(p != nullptr){
+    while (p != nullptr) {
         printf("%d ", p->val);
         p = p->nxt;
     }
-    printf("\n");
+    putchar('\n');
 }
 
-int main(){
+int main() {
     int m, n;
 
     cin >> m >> n;
@@ -26,17 +27,17 @@ int main(){
     LinkList ha = new ListNode;
     LinkList hb = new ListNode;
     ha->nxt = hb->nxt = nullptr;
-    ListNode * p = nullptr;
-    ListNode * ra = ha, * rb = hb;
+    ListNode *p = nullptr;
+    ListNode *ra = ha, *rb = hb;
 
-    for(int i = 0; i < m; i++){
+    for (int i = 0; i < m; ++i) {
         p = new ListNode;
         p->nxt = nullptr;
         cin >> p->val;
         ra->nxt = p;
         ra = ra->nxt;
     }
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         p = new ListNode;
         p->nxt = nullptr;
         cin >> p->val;
@@ -44,11 +45,10 @@ int main(){
         rb = rb->nxt;
     }
 
-    if(m > n){
+    if (m > n) {
         rb->nxt = ha->nxt;
         PrintLinkList(hb);
-    }
-    else{
+    } else {
         ra->nxt = hb->nxt;
         PrintLinkList(ha);
     }

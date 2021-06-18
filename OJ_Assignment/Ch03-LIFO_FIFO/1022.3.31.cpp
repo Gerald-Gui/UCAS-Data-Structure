@@ -3,7 +3,7 @@
 
 constexpr int maxlen = 100;
 
-int main(){
+int main() {
     char str[maxlen];
     while (scanf("%s", str) == 1) {
         int i = 0, j = strlen(str) - 2;
@@ -12,8 +12,8 @@ int main(){
                 printf("0\n");
                 break;
             }
-            i++;
-            j--;
+            ++i;
+            --j;
         }
         if (i >= j) {
             printf("1\n");

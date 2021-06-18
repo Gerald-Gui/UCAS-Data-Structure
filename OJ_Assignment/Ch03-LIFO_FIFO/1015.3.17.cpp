@@ -1,44 +1,29 @@
 #include <cstdio>
 
-typedef struct ListNode{
-    char ch;
-    ListNode * nxt;
-} * LinkStack;
-
-int main(){
+int main() {
     int flg = 0;
     char c, tmp;
-    LinkStack S = nullptr;
-    ListNode * p = nullptr;
+    char stk[BUFSIZ];
+    int sp = 0;
 
-    while((c = getchar()) != '@'){
-        if(flg == 0){
-            if(c == '&')
+    while ((c = getchar()) != '@') {
+        if (flg == 0) {
+            if (c == '&') {
                 flg = 1;
-            else{
-                p = new ListNode;
-                p->ch = c;
-                p->nxt = S;
-                S = p;
+            } else {
+                stk[sp++] = c;
             }
-        }else if(flg == 1){
-            if(S == nullptr){
+        } else if (flg == 1) {
+            if (sp == 0) {
                 printf("0\n");
                 return 0;
-            }else if(S->ch == c){
-                p = S;
-                tmp = S->ch;
-                S = p->nxt;
-                delete p;
-                p = nullptr;
+            } else if (stk[sp - 1] == c) {
+                --sp;
             }
         }
     }
 
-    if(S == nullptr)
-        printf("1\n");
-    else
-        printf("0\n");
+    printf("%c\n", sp == 0 ? '1' : '0');
 
     return 0;
 }

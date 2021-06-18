@@ -4,51 +4,50 @@ using namespace std;
 
 typedef struct ListNode{
     int val;
-    ListNode * nxt;
-} * LinkList;
+    ListNode *nxt;
+
+    ListNode(int e = 0, ListNode *ptr = nullptr) :
+        val(e), nxt(ptr) {}
+} *LinkList;
 
 void PrintLinkList(LinkList p){
-    if(p == nullptr){
+    if (p == nullptr) {
         printf("NULL\n");
         return;
     }
-    while(p != nullptr){
+    while (p != nullptr) {
         printf("%d ", p->val);
         p = p->nxt;
     }
-    printf("\n");
+    putchar('\n');
 }
 
-int main(){
+int main() {
     LinkList head = nullptr;
-    ListNode * p = nullptr;
+    ListNode *p = nullptr;
     int tmp = 0, cnt = 0;
 
     cin >> tmp;
-    head = new ListNode;
-    head->nxt = nullptr;
-    head->val = tmp;
-    p = head;
-    while(cin >> tmp){
-        p->nxt = new ListNode;
-        p->nxt->nxt = p;
-        p->nxt->val = tmp;
+    p = head = new ListNode(tmp);
+    while (cin >> tmp) {
+        p->nxt = new ListNode(tmp, p);
         p = p->nxt;
     }
 
-    ListNode * q = p->nxt;
+    ListNode *q = p->nxt;
     q->nxt = nullptr;
     delete p;
     
     p = head;
-    if(tmp == 0){
+    if (tmp == 0) {
         head = head->nxt;
         delete p;
         p = head;
-    }else{
-        while(++cnt < tmp)
+    } else {
+        while (++cnt < tmp) {
             p = p->nxt;
-        ListNode * q = p->nxt;
+        }
+        ListNode *q = p->nxt;
         p->nxt = q->nxt;
         delete q;
         q = nullptr;
